@@ -1,36 +1,65 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to @title, root_path, class:"navbar-brand"%>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav cl-effect-14">
-        <% @categories.each do |cate|%>
-            <%if cate.id==@category.id%>
-                <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)),class:"active" %>
-            <% else %>
-                <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)) %>
-            <%end%>
-        <%end%>
-      </ul>
-      <form class="navbar-form navbar-right">
-        <input type="text" class="form-control" placeholder="Search...">
-      </form>
-    </div><!--/.nav-collapse -->
-  </div>
-</nav>
+<div id="shangxia2">
+				<span id="gotop1">
+          <%= image_tag "huojian.svg" ,:alt => "返回顶部"%>
+				</span>
+</div>
 
+
+<div id="paper-back">
+  <nav>
+    <div class="close"></div>
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Our Work</a>
+    <a href="#">Contact</a>
+  </nav>
+</div>
+
+
+
+
+<div id="paper-window">
+  <div id="paper-front">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to @title, root_path, class:"navbar-brand"%>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav cl-effect-14">
+            <% @categories.each do |cate|%>
+                <%if cate.id==@category.id%>
+                    <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)),class:"active" %>
+                <% else %>
+                    <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)) %>
+                <%end%>
+            <%end%>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+            <button class="button button-glow button-circle button-royal"><i class="fa fa-search"></i></button>
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="hamburger"><span></span></div>
 
 <div class="container theme-showcase" role="main">
+  <div class="article-button">
+    <a href="#" class="button button-glow button-rounded button-primary">最热</a>
+    <a href="#" class="button button-glow button-border button-rounded button-primary">最新</a>
+    <a href="#" class="button button-glow button-border button-rounded button-primary">最多评论</a>
+    <a href="#" class="button button-glow button-rounded button-royal button-pill"><i class="fa fa-pencil"></i>发布</a>
+  </div>
   <div class="article-list">
     <% @articles.each do |ar|%>
       <div class="panel panel-default">
@@ -42,11 +71,94 @@
           <p class="article-content">
             <%= ar.content %>
           </p><hr>
+        <div class="article-icon">
+          <i class="fa fa-eye fa-lg"></i>
+          <i class="icon-des">12</i>
+          <a href="#"><i class="fa fa-thumbs-o-up fa-lg"></i></a>
+          <i class="icon-des">12</i>
+          <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
+          <i class="icon-des">12</i>
+          <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
+          <i class="icon-des">12</i>
+          <i class="fa fa-comments fa-lg"></i>
+          <i class="icon-des">12</i>
+        </div>
       </div>
     <%end%>
   </div>
  </div>
+  </div>
+</div>
+</div>
 
 
-</div> <!-- /container -->
+<script type="text/javascript">
+  $(function() {
+      // 返回顶部，绑定gotop1图标和gotop2文字事件
+      $("#gotop1").click(function(e) {
+          TweenMax.to(window, 1.5, {scrollTo:0, ease: Expo.easeInOut});
+          var huojian = new TimelineLite();
+          huojian.to("#gotop1", 1, {rotationY:720, scale:0.6, y:"+=40", ease:  Power4.easeOut})
+              .to("#gotop1", 1, {y:-1000, opacity:0, ease:  Power4.easeOut}, 0.6)
+              .to("#gotop1", 1, {y:0, rotationY:0, opacity:1, scale:1, ease: Expo.easeOut, clearProps: "all"}, "1.4");
+      });
+
+  });
+</script>
+
+
+<script>
+    var paperMenu = {
+        $window: $('#paper-window'),
+        $paperFront: $('#paper-front'),
+        $hamburger: $('.hamburger'),
+        offset: 1800,
+        pageHeight: $('#paper-front').outerHeight(),
+        open: function () {
+            this.$window.addClass('tilt');
+            this.$hamburger.off('click');
+            $('#container, .hamburger').on('click', this.close.bind(this));
+            this.hamburgerFix(true);
+            // console.log('opening...');
+        },
+        close: function () {
+            this.$window.removeClass('tilt');
+            $('#container, .hamburger').off('click');
+            this.$hamburger.on('click', this.open.bind(this));
+            this.hamburgerFix(false);
+            // console.log('closing...');
+        },
+        updateTransformOrigin: function () {
+            scrollTop = this.$window.scrollTop();
+            equation = (scrollTop + this.offset) / this.pageHeight * 100;
+            this.$paperFront.css('transform-origin', 'center ' + equation + '%');
+        },
+        hamburgerFix: function (opening) {
+            if (opening) {
+                $('.hamburger').css({
+                    position: 'absolute',
+                    top: this.$window.scrollTop() + 30 + 'px'
+                });
+            } else {
+                setTimeout(function () {
+                    $('.hamburger').css({
+                        position: 'fixed',
+                        top: '73px'
+                    });
+                }, 300);
+            }
+        },
+        bindEvents: function () {
+            this.$hamburger.on('click', this.open.bind(this));
+            $('.close').on('click', this.close.bind(this));
+            this.$window.on('scroll', this.updateTransformOrigin.bind(this));
+        },
+        init: function () {
+            this.bindEvents();
+            this.updateTransformOrigin();
+        }
+    };
+    paperMenu.init();
+</script>
+
 </body>
