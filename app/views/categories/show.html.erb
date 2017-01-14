@@ -1,6 +1,4 @@
-
 <body>
-
 <div id="shangxia2">
 				<span id="gotop1">
           <%= image_tag "huojian.svg" ,:alt => "返回顶部"%>
@@ -44,6 +42,26 @@
                 <%end%>
             <%end%>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <%if current_user%>
+                <%= link_to current_user.username, "#",class:"dropdown-toggle",data:{toggle:"dropdown"} %>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">个人中心</a></li>
+                  <li><a href="#">我的文章</a></li>
+                  <li><a href="#">我的收藏</a></li>
+                  <li class="divider"></li>
+                  <%= content_tag :li,(link_to "注销", destroy_user_session_path,method: :delete) %>
+                </ul>
+              <%else%>
+                  <%= link_to "游客", "#",class:"dropdown-toggle",data:{toggle:"dropdown"} %>
+                  <ul class="dropdown-menu" role="menu">
+                    <%= content_tag :li,(link_to "登录", new_user_session_path) %>
+                    <%= content_tag :li,(link_to "注册", new_user_registration_path) %>
+                  </ul>
+              <%end%>
+            </li>
+          </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
             <button class="button button-glow button-circle button-royal"><i class="fa fa-search"></i></button>
@@ -51,7 +69,10 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+
     <div class="hamburger"><span></span></div>
+
+
 
 <div class="container theme-showcase" role="main">
   <div class="article-button">
@@ -105,8 +126,6 @@
 
   });
 </script>
-
-
 <script>
     var paperMenu = {
         $window: $('#paper-window'),
