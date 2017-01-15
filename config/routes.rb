@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  post 'like_articles/create'
+
+  delete 'like_articles/destroy'
+
   get 'categories/:id', to:'categories#show',as: 'show_category'
+
 
   resources :articles
 

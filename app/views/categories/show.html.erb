@@ -1,7 +1,7 @@
 <body>
 <div id="shangxia2">
 				<span id="gotop1">
-          <%= image_tag "huojian.svg" ,:alt => "返回顶部"%>
+          <%= image_tag "huojian.svg", :alt => "返回顶部" %>
 				</span>
 </div>
 
@@ -15,118 +15,77 @@
     <a href="#">Contact</a>
   </nav>
 </div>
-
-
-
-
 <div id="paper-window">
   <div id="paper-front">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <%= link_to @title, root_path, class:"navbar-brand"%>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav cl-effect-14">
-            <% @categories.each do |cate|%>
-                <%if cate.id==@category.id%>
-                    <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)),class:"active" %>
-                <% else %>
-                    <%= content_tag :li,(link_to cate.name, show_category_path(cate.id)) %>
-                <%end%>
-            <%end%>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <%if current_user%>
-                <%= link_to current_user.username, "#",class:"dropdown-toggle",data:{toggle:"dropdown"} %>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">个人中心</a></li>
-                  <li><a href="#">我的文章</a></li>
-                  <li><a href="#">我的收藏</a></li>
-                  <li class="divider"></li>
-                  <%= content_tag :li,(link_to "注销", destroy_user_session_path,method: :delete) %>
-                </ul>
-              <%else%>
-                  <%= link_to "游客", "#",class:"dropdown-toggle",data:{toggle:"dropdown"} %>
-                  <ul class="dropdown-menu" role="menu">
-                    <%= content_tag :li,(link_to "登录", new_user_session_path) %>
-                    <%= content_tag :li,(link_to "注册", new_user_registration_path) %>
-                  </ul>
-              <%end%>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-            <button class="button button-glow button-circle button-royal"><i class="fa fa-search"></i></button>
-          </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
+    <%= render "shared/navigator" %>
     <div class="hamburger"><span></span></div>
-
-
-
-<div class="container theme-showcase" role="main">
-  <div class="article-button">
-    <a href="#" class="button button-glow button-rounded button-primary">最热</a>
-    <a href="#" class="button button-glow button-border button-rounded button-primary">最新</a>
-    <a href="#" class="button button-glow button-border button-rounded button-primary">最多评论</a>
-    <a href="#" class="button button-glow button-rounded button-royal button-pill"><i class="fa fa-pencil"></i>发布</a>
-  </div>
-  <div class="article-list">
-    <% @articles.each do |ar|%>
-      <div class="panel panel-default">
-          <h2><%= ar.title %></h2>
-          <p class="article-author">by
-            <%= link_to ar.user.username,"#" %>
-            <%= "      "+DateTime.parse(ar.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s%>
-          </p><hr>
-          <p class="article-content">
-            <%= ar.content %>
-          </p><hr>
-        <div class="article-icon">
-          <i class="fa fa-eye fa-lg"></i>
-          <i class="icon-des">12</i>
-          <a href="#"><i class="fa fa-thumbs-o-up fa-lg"></i></a>
-          <i class="icon-des">12</i>
-          <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
-          <i class="icon-des">12</i>
-          <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
-          <i class="icon-des">12</i>
-          <i class="fa fa-comments fa-lg"></i>
-          <i class="icon-des">12</i>
-        </div>
+    <div class="container theme-showcase" role="main">
+      <div class="article-button">
+        <a href="#" class="button button-glow button-rounded button-primary">最新</a>
+        <a href="#" class="button button-glow button-border button-rounded button-primary">最热</a>
+        <a href="#" class="button button-glow button-border button-rounded button-primary">最多评论</a>
+        <a href="#" class="button button-glow button-rounded button-royal button-pill"><i class="fa fa-pencil"></i>发布</a>
       </div>
-    <%end%>
-  </div>
- </div>
+      <div class="article-list">
+        <% @articles.each do |ar| %>
+            <div class="panel panel-default">
+              <h2><%= ar.title %></h2>
+              <p class="article-author">by
+                <%= link_to ar.user.username, "#" %>
+                <%= "      "+DateTime.parse(ar.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s %>
+              </p>
+              <hr>
+              <p class="article-content">
+                <%= ar.content %>
+              </p>
+              <hr>
+              <div class="article-icon">
+                <i class="fa fa-eye fa-lg"></i>
+                <i class="icon-des">12</i>
+                <% if current_user %>
+                    <%= link_to (content_tag :li, "", class: "fa fa-thumbs-o-up fa-lg"), like_articles_create_path(:user => current_user.id, :article => ar.id), method: "post" %>
+                    <i class="icon-des">12</i>
+                    <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
+                    <i class="icon-des">12</i>
+                    <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
+                    <i class="icon-des">12</i>
+                <% else %>
+                    <a href="#"><i class="fa fa-thumbs-o-up fa-lg"></i></a>
+                    <i class="icon-des">12</i>
+                    <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
+                    <i class="icon-des">12</i>
+                    <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
+                    <i class="icon-des">12</i>
+                <% end %>
+                <i class="fa fa-comments fa-lg"></i>
+                <i class="icon-des">12</i>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-
 
 <script type="text/javascript">
-  $(function() {
-      // 返回顶部，绑定gotop1图标和gotop2文字事件
-      $("#gotop1").click(function(e) {
-          TweenMax.to(window, 1.5, {scrollTo:0, ease: Expo.easeInOut});
-          var huojian = new TimelineLite();
-          huojian.to("#gotop1", 1, {rotationY:720, scale:0.6, y:"+=40", ease:  Power4.easeOut})
-              .to("#gotop1", 1, {y:-1000, opacity:0, ease:  Power4.easeOut}, 0.6)
-              .to("#gotop1", 1, {y:0, rotationY:0, opacity:1, scale:1, ease: Expo.easeOut, clearProps: "all"}, "1.4");
-      });
+    $(function () {
+        // 返回顶部，绑定gotop1图标和gotop2文字事件
+        $("#gotop1").click(function (e) {
+            TweenMax.to(window, 1.5, {scrollTo: 0, ease: Expo.easeInOut});
+            var huojian = new TimelineLite();
+            huojian.to("#gotop1", 1, {rotationY: 720, scale: 0.6, y: "+=40", ease: Power4.easeOut})
+                .to("#gotop1", 1, {y: -1000, opacity: 0, ease: Power4.easeOut}, 0.6)
+                .to("#gotop1", 1, {
+                    y: 0,
+                    rotationY: 0,
+                    opacity: 1,
+                    scale: 1,
+                    ease: Expo.easeOut,
+                    clearProps: "all"
+                }, "1.4");
+        });
 
-  });
-</script>
-<script>
+    });
     var paperMenu = {
         $window: $('#paper-window'),
         $paperFront: $('#paper-front'),
@@ -179,5 +138,4 @@
     };
     paperMenu.init();
 </script>
-
 </body>

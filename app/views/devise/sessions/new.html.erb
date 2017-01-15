@@ -8,7 +8,7 @@
           <%= f.submit "登录", class:"btn btn-lg btn-warning btn-block"%><br />
           <% if devise_mapping.rememberable? -%>
               <%= f.check_box :remember_me %> 记住我
-              <%= link_to "Forgot your password?", new_password_path(resource_name),class:"forgot-password" %>
+              <%= link_to "忘记密码?", new_password_path(resource_name),class:"forgot-password" %>
           <% end -%>
       <%end%>
     </div>

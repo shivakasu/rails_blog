@@ -1,0 +1,48 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to @title, root_path, class: "navbar-brand" %>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav cl-effect-14">
+        <% @categories.each do |cate| %>
+            <% if cate.id==@category.id %>
+                <%= content_tag :li, (link_to cate.name, show_category_path(cate.id)), class: "active" %>
+            <% else %>
+                <%= content_tag :li, (link_to cate.name, show_category_path(cate.id)) %>
+            <% end %>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <% if current_user %>
+              <%= link_to current_user.username, "#", class: "dropdown-toggle", data: {toggle: "dropdown"} %>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">个人中心</a></li>
+                <li><a href="#">我的文章</a></li>
+                <li><a href="#">我的收藏</a></li>
+                <li class="divider"></li>
+                <%= content_tag :li, (link_to "注销", destroy_user_session_path, method: :delete) %>
+              </ul>
+          <% else %>
+              <%= link_to "游客", "#", class: "dropdown-toggle", data: {toggle: "dropdown"} %>
+              <ul class="dropdown-menu" role="menu">
+                <%= content_tag :li, (link_to "登录", new_user_session_path) %>
+                <%= content_tag :li, (link_to "注册", new_user_registration_path) %>
+              </ul>
+          <% end %>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input type="text" class="form-control" placeholder="Search...">
+        <button class="button button-glow button-circle button-royal"><i class="fa fa-search"></i></button>
+      </form>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>

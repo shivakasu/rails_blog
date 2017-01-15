@@ -8,6 +8,6 @@ class CategoriesController < ApplicationController
       @categories=Category.find([5,6,7,8])
       @title="SHIVA@FUN"
     end
-    @articles=@category.articles
+    @articles=@category.articles.order("created_at DESC")
   end
 end
