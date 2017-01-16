@@ -1,24 +1,10 @@
-# README
+# 基于rails框架的多用户博客系统
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version ： 2.3.1
 
-Things you may want to cover:
+* Rails version ： 5.0.1
 
-* Ruby version
+* OS : deepin 15.3
 
-* System dependencies
+* Database : sqlite3 1.3.13
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

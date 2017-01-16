@@ -26,45 +26,11 @@
         <a href="#" class="button button-glow button-border button-rounded button-primary">最多评论</a>
         <a href="#" class="button button-glow button-rounded button-royal button-pill"><i class="fa fa-pencil"></i>发布</a>
       </div>
-      <div class="article-list">
-        <% @articles.each do |ar| %>
-            <div class="panel panel-default">
-              <h2><%= ar.title %></h2>
-              <p class="article-author">by
-                <%= link_to ar.user.username, "#" %>
-                <%= "      "+DateTime.parse(ar.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s %>
-              </p>
-              <hr>
-              <p class="article-content">
-                <%= ar.content %>
-              </p>
-              <hr>
-              <div class="article-icon">
-                <i class="fa fa-eye fa-lg"></i>
-                <i class="icon-des">12</i>
-                <% if current_user %>
-                    <%= link_to (content_tag :li, "", class: "fa fa-thumbs-o-up fa-lg"), like_articles_create_path(:user => current_user.id, :article => ar.id), method: "post" %>
-                    <i class="icon-des">12</i>
-                    <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
-                    <i class="icon-des">12</i>
-                    <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
-                    <i class="icon-des">12</i>
-                <% else %>
-                    <a href="#"><i class="fa fa-thumbs-o-up fa-lg"></i></a>
-                    <i class="icon-des">12</i>
-                    <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
-                    <i class="icon-des">12</i>
-                    <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
-                    <i class="icon-des">12</i>
-                <% end %>
-                <i class="fa fa-comments fa-lg"></i>
-                <i class="icon-des">12</i>
-              </div>
-            </div>
-        <% end %>
+      <div class="article-list" id="article-list">
+        <%= render @articles %>
       </div>
     </div>
-  </div>
+  </div>s
 </div>
 
 <script type="text/javascript">

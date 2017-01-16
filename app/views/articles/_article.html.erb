@@ -1,0 +1,38 @@
+<% arclass="panel panel-default ar"+article.id.to_s %>
+<div class="<%= arclass %>">
+  <h2><%= article.title %></h2>
+  <p class="article-author">by
+    <%= link_to article.user.username, "#" %>
+    <%= "      "+DateTime.parse(article.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s %>
+  </p>
+  <hr>
+  <p class="article-content">
+    <%= article.content %>
+  </p>
+  <hr>
+  <div class="article-icon">
+    <i class="fa fa-eye fa-lg"></i>
+    <i class="icon-des">12</i>
+    <% if current_user %>
+        <% if LikeArticle.where(user_id: current_user.id, article_id: article.id).first==nil %>
+            <%= link_to (content_tag :li, "", class: "fa fa-thumbs-o-up fa-lg"), like_articles_create_path(:user => current_user.id, :article => article.id), method: "post", remote: true %>
+        <% else %>
+            <%= link_to (content_tag :li, "", class: "fa fa-thumbs-up fa-lg"), like_articles_destroy_path(:user => current_user.id, :article => article.id), method: "delete", remote: true %>
+        <% end %>
+        <i class="icon-des">12</i>
+        <a href="#"><i class="fa fa-thumbs-o-down fa-lg"></i></a>
+        <i class="icon-des">12</i>
+        <a href="#"><i class="fa fa-bookmark-o fa-lg"></i></a>
+        <i class="icon-des">12</i>
+    <% else %>
+        <i class="fa fa-thumbs-o-up fa-lg"></i>
+        <i class="icon-des">12</i>
+        <i class="fa fa-thumbs-o-down fa-lg"></i>
+        <i class="icon-des">12</i>
+        <i class="fa fa-bookmark-o fa-lg"></i>
+        <i class="icon-des">12</i>
+    <% end %>
+    <i class="fa fa-comments fa-lg"></i>
+    <i class="icon-des">12</i>
+  </div>
+</div>
