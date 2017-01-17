@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
-  post 'like_articles/create'
 
+
+  get 'users/:id', to:'userinfos#show',as: 'user_detail'
+
+  #article-icon-bar
+  post 'bookmarks/create'
+  delete 'bookmarks/destroy'
+  post 'unlike_articles/create'
+  delete 'unlike_articles/destroy'
+  post 'like_articles/create'
   delete 'like_articles/destroy'
+
+
 
   get 'categories/:id', to:'categories#show',as: 'show_category'
 
@@ -13,5 +23,4 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

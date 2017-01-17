@@ -24,7 +24,7 @@
           <% if current_user %>
               <%= link_to current_user.username, "#", class: "dropdown-toggle", data: {toggle: "dropdown"} %>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">个人中心</a></li>
+                <%= content_tag :li, (link_to "个人中心", user_detail_path(current_user.id)) %>
                 <li><a href="#">我的文章</a></li>
                 <li><a href="#">我的收藏</a></li>
                 <li class="divider"></li>

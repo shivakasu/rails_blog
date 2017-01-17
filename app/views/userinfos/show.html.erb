@@ -1,0 +1,21 @@
+<% provide(:title, @user.username+" 's space'") %>
+<body>
+
+<div class="user-page">
+  <div class="panel panel-default user-label">
+    <div class="panel-body">
+      <%= image_tag  "boy.jpg",class: "userinfo-head"%>
+      <p class="userinfo-name"><%= @user.username %><%= image_tag  "male.png"%></p>
+      <%= image_tag  "rank1.png"%>
+    </div>
+  </div>
+  <div class="user-detail">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#">Home</a></li>
+      <li role="presentation"><a href="#">Profile</a></li>
+      <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>

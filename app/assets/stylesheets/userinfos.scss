@@ -1,0 +1,37 @@
+// Place all the styles related to the userinfos controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.user-page{
+  padding: 0 5%;
+  padding-top: 5%;
+}
+
+.user-label{
+  text-align: center;
+  width: 20%;
+  height:400px;
+  float: left;
+}
+
+.user-detail{
+  width: 70%;
+  float: right;
+}
+
+.userinfo-head{
+  width: 50%;
+  height: 50%;
+  border-radius:50%;
+  border: 1px solid;
+}
+
+.userinfo-name{
+  padding-top: 10%;
+  font-size: 1.05em;
+  img{
+    width: 10%;
+    height: 10%;
+    margin-left: 10px;
+    margin-top: -9px;
+  }
+}

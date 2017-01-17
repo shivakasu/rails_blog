@@ -1,6 +1,6 @@
-class LikeArticlesController < ApplicationController
+class BookmarksController < ApplicationController
   def create
-    LikeArticle.create(user_id:params[:user],article_id:params[:article])
+    Bookmark.create(user_id:params[:user],article_id:params[:article])
     @article=Article.find(params[:article])
     respond_to do |format|
       format.html { redirect_to @article}
@@ -10,7 +10,7 @@ class LikeArticlesController < ApplicationController
   end
 
   def destroy
-    LikeArticle.where(user_id:params[:user],article_id:params[:article]).find_each do |cate|
+    Bookmark.where(user_id:params[:user],article_id:params[:article]).find_each do |cate|
       cate.destroy
     end
     @article=Article.find(params[:article])
